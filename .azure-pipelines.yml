@@ -12,7 +12,7 @@ steps:
 # Install Python
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.11'
+    versionSpec: '3.12'
     addToPath: true
 
 # Install dependencies
@@ -31,6 +31,6 @@ steps:
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Azure subscription 1'  # Replace with your service connection name
-    appName: 'my-webapp'                # Replace with your Azure Web App name
+    appName: 'my-web-akyl'                # Replace with your Azure Web App name
     package: '$(Build.ArtifactStagingDirectory)/*.zip'
 
