@@ -4,7 +4,7 @@ trigger:
       - main  # Trigger on push to main
 
 pool:
-  name: 'vm-azureuser'
+  name: 'default'
 
 steps:
 - checkout: self
