@@ -30,7 +30,7 @@ steps:
 # Deploy to Azure Web App
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'azure-flask'  # Replace with your service connection name
+    azureSubscription: 'vm-azureuser'  # Replace with your service connection name
     appName: 'my-web-akyl'                # Replace with your Azure Web App name
     package: '$(Build.ArtifactStagingDirectory)/*.zip'
 
