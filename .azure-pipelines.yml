@@ -12,14 +12,15 @@ variables:
 steps:
 - checkout: self
 
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.12'
-    addToPath: true
+# Use system-installed Python 3.12
+- script: |
+    python3.12 --version
+    curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3.12
+  displayName: 'Set up Python 3.12 with pip'
 
 - script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
+    python3.12 -m pip install --upgrade pip
+    python3.12 -m pip install -r requirements.txt
   displayName: 'Install Python dependencies'
 
 - task: ArchiveFiles@2
@@ -35,4 +36,3 @@ steps:
          -H "Accept: application/json" \
          -H "Authorization: Bearer $(RENDER_API_KEY)"
   displayName: 'Deploy to Render'
-
