@@ -36,5 +36,3 @@ steps:
          -H "Authorization: Bearer $(RENDER_API_KEY)"
   displayName: 'Deploy to Render'
 
-
-
