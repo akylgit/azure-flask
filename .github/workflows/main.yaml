@@ -1,0 +1,39 @@
+name: Deploy Flask to Render
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Install Render CLI
+      run: |
+        curl -fsSL https://cdn.render.com/cli/install.sh | bash
+        export PATH=$HOME/.render/bin:$PATH
+        render --version
+
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: |
+        export PATH=$HOME/.render/bin:$PATH
+        # Replace srv-YOUR_SERVICE_ID with your actual Render service ID
+        render deploy service srv-YOUR_SERVICE_ID
+
