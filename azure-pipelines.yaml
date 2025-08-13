@@ -1,0 +1,44 @@
+trigger:
+  branches:
+    include:
+      - main  # Trigger deployment on push to main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+# 1. Checkout repository
+- checkout: self
+
+# 2. Set up Python
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.12'
+    addToPath: true
+
+# 3. Install dependencies
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+  displayName: 'Install Python dependencies'
+
+# 4. Create zip artifact for deployment
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveFile: '$(Build.ArtifactStagingDirectory)/app.zip'
+    replaceExistingArchive: true
+  displayName: 'Package app into zip'
+
+# 5. Deploy to Render
+- script: |
+    curl -X POST "https://api.render.com/deploy/srv-YOUR_SERVICE_ID" \
+         -H "Accept: application/json" \
+         -H "Authorization: Bearer $(RENDER_API_KEY)"
+  displayName: 'Trigger deployment on Render'
+  env:
+    RENDER_API_KEY: $(RENDER_API_KEY)  # Define this in Azure DevOps Pipeline secrets
+
+
+
