@@ -24,10 +24,10 @@ jobs:
         pip install -r requirements.txt
 
     - name: Deploy to Render
-      env:
-        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-      run: |
-        export PATH=$HOME/.render/bin:$PATH
-        # Replace srv-YOUR_SERVICE_ID with your actual Render service ID
-        render deploy service srv-YOUR_SERVICE_ID
+  env:
+    RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+  run: |
+    curl -X POST "https://api.render.com/deploy/srv-d2eclhs9c44c738r30og" \
+      -H "Accept: application/json" \
+      -H "Authorization: Bearer $RENDER_API_KEY"
 
