@@ -12,7 +12,13 @@ variables:
 steps:
 - checkout: self
 
-# Use system-installed Python 3.12
+# Ensure zip is installed
+- script: |
+    sudo apt update
+    sudo apt install -y zip
+  displayName: 'Install zip utility'
+
+# Use system Python 3.12
 - script: |
     python3.12 --version
     curl -sS https://bootstrap.pypa.io/get-pip.py | sudo python3.12
