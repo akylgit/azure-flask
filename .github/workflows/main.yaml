@@ -1,8 +1,8 @@
-name: Deploy Flask to Render
+#name: Deploy Flask to Render
 
-on:
-  push:
-    branches:
+#on:
+#  push:
+#    branches:
       - main
 
 jobs:
